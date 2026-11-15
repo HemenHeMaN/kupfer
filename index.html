@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Übersicht</title>
+<style>
+  :root { --bg:#f4f4f2; --card:#fff; --text:#222; --muted:#666; --line:#ddd; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#161616; --card:#222; --text:#eee; --muted:#aaa; --line:#383838; }
+  }
+  * { box-sizing: border-box; }
+  body { margin:0; padding:16px; background:var(--bg); color:var(--text);
+         font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  h1 { font-size:1.4rem; margin:0 0 16px; }
+  .grid { display:flex; flex-wrap:wrap; gap:14px; align-items:flex-start; }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:10px;
+          width:220px; overflow:hidden; }
+  .card img { display:block; width:100%; height:220px; object-fit:cover; background:#888; cursor:zoom-in; }
+  .info { padding:10px 12px 12px; }
+  .id { font-weight:700; font-size:1.05rem; margin-bottom:6px; }
+  .row { display:flex; justify-content:space-between; font-size:.9rem; padding:2px 0; }
+  .row span:first-child { color:var(--muted); }
+  #lightbox { position:fixed; inset:0; background:rgba(0,0,0,.88); display:none;
+              align-items:center; justify-content:center; padding:16px; z-index:10; cursor:zoom-out; }
+  #lightbox.open { display:flex; }
+  #lightbox img { max-width:100%; max-height:100%; border-radius:6px; }
+</style>
+</head>
+<body>
+<h1>Übersicht</h1>
+<div class="grid" id="grid"></div>
+<div id="lightbox"><img alt=""></div>
+
+<script>
+// Höhe und Durchmesser in cm, Gewicht in kg
+const items = [
+  ["K01", 65, 35, "3,75"], ["K02", 61, 36.5, "3,35"], ["K03", 57, 30, "2,70"],
+  ["K04", 57, 30, "2,70"], ["K05", 57, 30, "2,55"], ["K06", 52.5, 26, "2,20"],
+  ["K07", 53, 25, "2,20"], ["K08", 52, 28, "1,85"], ["K09", 54, 25, "2,35"],
+  ["K10", 50, 25, "2,10"], ["K11", 50, 26, "2,45"], ["K12", 46, 23, "1,60"],
+  ["K13", 46, 23, "1,70"], ["K14", 54, 30, "2,30"], ["K15", 50, 30, "2,15"],
+  ["K16", 50, 30, "2,20"], ["K17", 50, 30, "2,15"], ["K18", 50, 30, "2,20"],
+  ["K19", 51, 30, "2,60"], ["K20", 40, 23, "1,40"], ["K21", 41, 23, "1,15"],
+  ["M01", 36, 15, "1,7"]
+];
+
+const fmt = n => String(n).replace(".", ",");
+
+// GitHub Pages unterscheidet Groß-/Kleinschreibung: mehrere Dateinamen werden probiert
+function candidates(id) {
+  const lo = id.toLowerCase();
+  return [id + ".jpg", lo + ".jpg", id + ".JPG", lo + ".JPG",
+          id + ".jpeg", lo + ".jpeg", id + ".png", lo + ".png"];
+}
+
+const grid = document.getElementById("grid");
+items.forEach(([id, h, d, w]) => {
+  const card = document.createElement("div");
+  card.className = "card";
+
+  const img = document.createElement("img");
+  img.alt = id;
+  img.loading = "lazy";
+  const list = candidates(id);
+  let i = 0;
+  img.onerror = () => {
+    i++;
+    if (i < list.length) img.src = list[i];
+    else { img.onerror = null; img.alt = id + " – Foto nicht gefunden"; }
+  };
+  img.src = list[0];
+  img.addEventListener("click", () => {
+    const lb = document.getElementById("lightbox");
+    lb.querySelector("img").src = img.src;
+    lb.classList.add("open");
+  });
+
+  const info = document.createElement("div");
+  info.className = "info";
+  info.innerHTML =
+    `<div class="id">${id}</div>
+     <div class="row"><span>Höhe</span><span>${fmt(h)} cm</span></div>
+     <div class="row"><span>Durchmesser</span><span>${fmt(d)} cm</span></div>
+     <div class="row"><span>Gewicht</span><span>${w} kg</span></div>`;
+
+  card.append(img, info);
+  grid.appendChild(card);
+});
+
+document.getElementById("lightbox").addEventListener("click", e =>
+  e.currentTarget.classList.remove("open"));
+</script>
+</body>
+</html>
