@@ -21,6 +21,7 @@
   .id { font-weight:700; font-size:1.05rem; margin-bottom:6px; }
   .row { display:flex; justify-content:space-between; font-size:.9rem; padding:2px 0; }
   .row span:first-child { color:var(--muted); }
+  .ku { font-weight:500; font-family: "Noto Naskh Arabic", "Segoe UI", Tahoma, Arial, sans-serif; }
   #lightbox { position:fixed; inset:0; background:rgba(0,0,0,.88); display:none;
               align-items:center; justify-content:center; padding:16px; z-index:10; cursor:zoom-out; }
   #lightbox.open { display:flex; }
@@ -28,7 +29,7 @@
 </style>
 </head>
 <body>
-<h1>Übersicht</h1>
+<h1>Übersicht · <span class="ku" lang="ckb" dir="rtl">پێڕست</span></h1>
 <div class="grid" id="grid"></div>
 <div id="lightbox"><img alt=""></div>
 
@@ -80,9 +81,9 @@ items.forEach(([id, h, d, w]) => {
   info.className = "info";
   info.innerHTML =
     `<div class="id">${id}</div>
-     <div class="row"><span>Höhe</span><span>${fmt(h)} cm</span></div>
-     <div class="row"><span>Durchmesser</span><span>${fmt(d)} cm</span></div>
-     <div class="row"><span>Gewicht</span><span>${w} kg</span></div>`;
+     <div class="row"><span>Höhe · <b class="ku" lang="ckb" dir="rtl">بەرزی</b></span><span>${fmt(h)} cm</span></div>
+     <div class="row"><span>Durchmesser · <b class="ku" lang="ckb" dir="rtl">قەتر</b></span><span>${fmt(d)} cm</span></div>
+     <div class="row"><span>Gewicht · <b class="ku" lang="ckb" dir="rtl">کێش</b></span><span>${w} kg</span></div>`;
 
   card.append(img, info);
   grid.appendChild(card);
