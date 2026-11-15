@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Übersicht</title>
+<title>Overview</title>
 <style>
   :root { --bg:#f4f4f2; --card:#fff; --text:#222; --muted:#666; --line:#ddd; }
   @media (prefers-color-scheme: dark) {
@@ -39,7 +39,7 @@
 </style>
 </head>
 <body>
-<h1>Übersicht · <span class="ku" lang="ckb" dir="rtl">پێڕست</span></h1>
+<h1>Overview · <span class="ku" lang="ckb" dir="rtl">پێڕست</span></h1>
 <div class="grid" id="grid"></div>
 <div id="lightbox"><img alt=""></div>
 
@@ -56,7 +56,7 @@ const items = [
   ["M01", 36, 15, "1,7"]
 ];
 
-const fmt = n => String(n).replace(".", ",");
+const fmt = n => String(n).replace(",", ".");
 
 // GitHub Pages unterscheidet Groß-/Kleinschreibung: mehrere Dateinamen werden probiert
 function candidates(id) {
@@ -91,9 +91,9 @@ items.forEach(([id, h, d, w]) => {
   info.className = "info";
   info.innerHTML =
     `<div class="id">${id}</div>
-     <div class="row"><span>Höhe · <b class="ku" lang="ckb" dir="rtl">بەرزی</b></span><span>${fmt(h)} cm</span></div>
-     <div class="row"><span>Durchmesser · <b class="ku" lang="ckb" dir="rtl">قەتر</b></span><span>${fmt(d)} cm</span></div>
-     <div class="row"><span>Gewicht · <b class="ku" lang="ckb" dir="rtl">کێش</b></span><span>${w} kg</span></div>`;
+     <div class="row"><span>Height · <b class="ku" lang="ckb" dir="rtl">بەرزی</b></span><span>${fmt(h)} cm</span></div>
+     <div class="row"><span>Diameter · <b class="ku" lang="ckb" dir="rtl">تیرە</b></span><span>${fmt(d)} cm</span></div>
+     <div class="row"><span>Weight · <b class="ku" lang="ckb" dir="rtl">کێش</b></span><span>${fmt(w)} kg</span></div>`;
 
   card.append(img, info);
   grid.appendChild(card);
