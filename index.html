@@ -13,10 +13,20 @@
   body { margin:0; padding:16px; background:var(--bg); color:var(--text);
          font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
   h1 { font-size:1.4rem; margin:0 0 16px; }
-  .grid { display:flex; flex-wrap:wrap; gap:14px; align-items:flex-start; }
-  .card { background:var(--card); border:1px solid var(--line); border-radius:10px;
-          width:220px; overflow:hidden; }
-  .card img { display:block; width:100%; height:220px; object-fit:cover; background:#888; cursor:zoom-in; }
+  .grid { display:grid; gap:14px; align-items:start;
+          grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:10px; overflow:hidden; }
+  .card img { display:block; width:100%; aspect-ratio:1/1; height:auto; object-fit:cover; background:#888; cursor:zoom-in; }
+  .row { flex-wrap:wrap; column-gap:8px; }
+  .row span:last-child { font-weight:600; white-space:nowrap; }
+  @media (max-width: 600px) {
+    body { padding:10px; }
+    h1 { font-size:1.15rem; margin-bottom:10px; }
+    .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap:10px; }
+    .info { padding:8px 9px 10px; }
+    .id { font-size:1rem; margin-bottom:4px; }
+    .row { font-size:.8rem; }
+  }
   .info { padding:10px 12px 12px; }
   .id { font-weight:700; font-size:1.05rem; margin-bottom:6px; }
   .row { display:flex; justify-content:space-between; font-size:.9rem; padding:2px 0; }
